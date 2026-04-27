@@ -94,6 +94,11 @@ class StripeController extends Controller
 
         // 2. Also check the cart for any subscription items (IDs starting with 's')
         $cart = session()->get('cart', []);
+        
+        $orderItems = [];
+        $totalQuantity = 0;
+        $totalPrice = 0;
+
         foreach ($cart as $id => $item) {
             if (strpos($id, 's') === 0 && $user) {
                 \App\Models\PetClubSubscription::create([
@@ -103,7 +108,25 @@ class StripeController extends Controller
                     'email' => $user->email,
                     'status' => 'active'
                 ]);
+            } elseif (strpos($id, 's') !== 0) {
+                $orderItems[] = [
+                    'id' => $id,
+                    'name' => $item['name'],
+                    'price' => $item['price'],
+                    'quantity' => $item['quantity'],
+                ];
+                $totalQuantity += $item['quantity'];
+                $totalPrice += $item['price'] * $item['quantity'];
             }
+        }
+
+        if (count($orderItems) > 0) {
+            \App\Models\Order::create([
+                'user_id' => $user ? $user->id : null,
+                'items' => $orderItems,
+                'total_quantity' => $totalQuantity,
+                'total_price' => $totalPrice,
+            ]);
         }
 
         session()->forget('cart');
