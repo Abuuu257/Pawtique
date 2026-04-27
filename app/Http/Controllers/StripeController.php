@@ -123,6 +123,8 @@ class StripeController extends Controller
         if (count($orderItems) > 0) {
             \App\Models\Order::create([
                 'user_id' => $user ? $user->id : null,
+                'user_name' => $user ? $user->name : 'Guest',
+                'user_email' => $user ? $user->email : null,
                 'items' => $orderItems,
                 'total_quantity' => $totalQuantity,
                 'total_price' => $totalPrice,
