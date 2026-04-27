@@ -110,27 +110,89 @@
                             </div>
                         </div>
 
-                         <!-- Reviews Accordion -->
-                         <div x-data="{ open: false }" class="py-6">
-                            <button @click="open = !open" class="flex justify-between items-center w-full focus:outline-none group">
-                                <div class="flex items-center gap-4">
-                                    <span class="text-sm font-bold uppercase tracking-widest text-gray-900 group-hover:text-orange-500 transition-colors">Reviews ({{ $product['reviews'] }})</span>
-                                    <div class="flex text-black">
-                                        @for($i=1; $i<=5; $i++)
-                                        <svg class="w-3 h-3 {{ $i<=floor($product['rating']) ? 'text-black' : 'text-gray-200' }}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                        @endfor
-                                    </div>
-                                </div>
-                                <svg class="w-4 h-4 text-gray-900 transform transition-transform" :class="{'rotate-180': open}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </button>
-                            <div x-show="open" x-transition x-cloak class="mt-6">
-                                <div class="flex items-center justify-between mb-4">
-                                    <span class="text-5xl font-black text-gray-900">{{ number_format($product['rating'], 1) }}</span>
-                                    <span class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Overall Rating</span>
-                                </div>
-                                <p class="text-sm text-gray-500 italic bg-gray-50 p-4 rounded-lg">"Highly recommend this for any pet owner looking for quality. Fits perfectly and looks great!"</p>
-                            </div>
-                        </div>
+                          <!-- Reviews Accordion -->
+                          <div x-data="{ open: false }" class="py-6">
+                             <button @click="open = !open" class="flex justify-between items-center w-full focus:outline-none group">
+                                 <div class="flex items-center gap-4">
+                                     <span class="text-sm font-bold uppercase tracking-widest text-gray-900 group-hover:text-orange-500 transition-colors">Reviews ({{ $reviews->count() }})</span>
+                                     <div class="flex text-black">
+                                         @for($i=1; $i<=5; $i++)
+                                         <svg class="w-3 h-3 {{ $i<=floor($product->rating) ? 'text-black' : 'text-gray-200' }}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                                         @endfor
+                                     </div>
+                                 </div>
+                                 <svg class="w-4 h-4 text-gray-900 transform transition-transform" :class="{'rotate-180': open}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                             </button>
+                             <div x-show="open" x-transition x-cloak class="mt-6">
+                                 <div class="flex items-center justify-between mb-8">
+                                     <div>
+                                         <span class="text-5xl font-black text-gray-900">{{ number_format($product->rating, 1) }}</span>
+                                         <span class="text-[10px] text-gray-500 uppercase tracking-widest font-bold block mt-1 ml-1 text-left">Overall Rating</span>
+                                     </div>
+                                 </div>
+
+                                 <!-- Review List -->
+                                 <div class="space-y-8 mb-12">
+                                     @foreach($reviews as $review)
+                                     <div class="border-b border-gray-100 pb-8 last:border-0 text-left">
+                                         <div class="flex items-center justify-between mb-2">
+                                             <div class="flex items-center gap-2">
+                                                 <div class="flex text-black">
+                                                     @for($i=1; $i<=5; $i++)
+                                                     <svg class="w-2.5 h-2.5 {{ $i<=$review->rating ? 'text-black' : 'text-gray-200' }}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                                                     @endfor
+                                                 </div>
+                                                 <span class="text-[10px] font-black uppercase tracking-widest text-gray-900 ml-2">{{ $review->user->name }}</span>
+                                             </div>
+                                             <span class="text-[10px] font-bold text-gray-300">{{ $review->created_at->diffForHumans() }}</span>
+                                         </div>
+                                         <p class="text-sm text-gray-600 font-medium leading-relaxed italic">"{{ $review->comment }}"</p>
+                                     </div>
+                                     @endforeach
+
+                                     @if($reviews->isEmpty())
+                                     <p class="text-sm text-gray-400 italic">No reviews yet. Be the first to share your thoughts!</p>
+                                     @endif
+                                 </div>
+
+                                 <!-- Review Form -->
+                                 <div class="bg-gray-50 p-8 rounded-3xl border border-gray-100 text-left">
+                                     @auth
+                                     <h4 class="text-xs font-black uppercase tracking-widest text-gray-900 mb-6">Leave a Review</h4>
+                                     <form action="{{ route('reviews.store') }}" method="POST">
+                                         @csrf
+                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                         
+                                         <div class="mb-4">
+                                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-400 block mb-2">Rating</label>
+                                            <div class="flex gap-2" x-data="{ rating: 5 }">
+                                                <template x-for="i in 5">
+                                                    <button type="button" @click="rating = i" class="focus:outline-none">
+                                                        <svg class="w-6 h-6 transition-colors" :class="i <= rating ? 'text-black' : 'text-gray-200'" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                                        </svg>
+                                                    </button>
+                                                </template>
+                                                <input type="hidden" name="rating" :value="rating">
+                                            </div>
+                                         </div>
+
+                                         <div class="mb-6">
+                                            <label for="comment" class="text-[10px] font-bold uppercase tracking-widest text-gray-400 block mb-2">Your Experience</label>
+                                            <textarea name="comment" rows="3" required class="w-full bg-white border border-gray-200 rounded-xl p-4 text-sm focus:ring-black focus:border-black placeholder-gray-300 font-medium" placeholder="Share your thoughts with other pet parents..."></textarea>
+                                         </div>
+
+                                         <button type="submit" class="w-full bg-black text-white text-[10px] font-black uppercase tracking-widest py-4 rounded-xl hover:bg-orange-500 transition-all shadow-sm">Submit Review</button>
+                                     </form>
+                                     @else
+                                     <div class="text-center py-4">
+                                         <p class="text-sm font-medium text-gray-500 mb-4">You must be logged in to leave a review.</p>
+                                         <a href="{{ route('login') }}" class="text-[10px] font-black uppercase tracking-widest text-black hover:text-orange-500 underline underline-offset-4">Log in to your account</a>
+                                     </div>
+                                     @endauth
+                                 </div>
+                             </div>
+                         </div>
                     </div>
                 </div>
             </div>

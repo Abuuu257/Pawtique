@@ -37,13 +37,15 @@ class PageController extends Controller
     }
     
     public function productDetail($id) {
-        $product = Product::findOrFail($id);
+        $product = Product::with(['reviewsList.user'])->findOrFail($id);
         
         // Ensure image key exists for cart compatibility if needed
         $product->image = $product->images[0];
         $isFavorite = auth()->check() ? auth()->user()->favoriteProducts()->where('product_id', $id)->exists() : false;
 
-        return view('product-detail', compact('product', 'isFavorite'));
+        $reviews = $product->reviewsList()->latest()->get();
+
+        return view('product-detail', compact('product', 'isFavorite', 'reviews'));
     }
 
 

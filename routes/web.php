@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\ReviewController;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/products', [PageController::class, 'products'])->name('products');
@@ -21,6 +22,8 @@ Route::post('/checkout', [StripeController::class, 'checkout'])->name('checkout'
 Route::post('/subscribe', [StripeController::class, 'subscribe'])->name('subscribe');
 Route::get('/checkout/success', [StripeController::class, 'success'])->name('stripe.success');
 Route::get('/checkout/cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
+
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store')->middleware('auth');
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [PageController::class, 'adminDashboard'])->name('admin.dashboard');
