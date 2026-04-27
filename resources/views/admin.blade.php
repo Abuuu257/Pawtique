@@ -53,6 +53,16 @@
                 <p class="text-sm text-gray-500 mb-6 font-medium">Currently managing {{ $memberCount ?? 0 }} active club members.</p>
                 <a href="{{ route('admin.members') }}" class="w-full inline-block bg-gray-900 text-white text-center py-3 rounded-xl text-xs font-bold hover:bg-blue-500 transition-colors uppercase tracking-widest">Manage Members</a>
             </div>
+
+            <!-- Manage Orders -->
+            <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100 hover:shadow-xl transition-all group">
+                <div class="w-14 h-14 bg-green-50 text-green-500 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Order Tracking</h3>
+                <p class="text-sm text-gray-500 mb-6 font-medium">Monitor all successful purchases.</p>
+                <a href="{{ route('admin.orders') }}" class="w-full inline-block bg-gray-900 text-white text-center py-3 rounded-xl text-xs font-bold hover:bg-green-500 transition-colors uppercase tracking-widest">View Orders</a>
+            </div>
         </div>
 
         <!-- RECENT MESSAGES -->

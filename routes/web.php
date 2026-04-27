@@ -38,6 +38,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // Member Club Management
     Route::get('/admin/members', [PageController::class, 'adminMembers'])->name('admin.members');
     Route::delete('/admin/members/{id}', [PageController::class, 'deleteMember'])->name('admin.members.delete');
+
+    // Order Management
+    Route::get('/admin/orders', [PageController::class, 'adminOrders'])->name('admin.orders');
+    Route::delete('/admin/orders/{id}', [PageController::class, 'deleteOrder'])->name('admin.orders.delete');
 });
 
 Route::middleware([

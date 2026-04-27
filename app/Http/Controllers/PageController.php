@@ -239,6 +239,17 @@ class PageController extends Controller
         return view('admin.members', compact('members', 'plans'));
     }
 
+    public function adminOrders() {
+        $orders = \App\Models\Order::with('user')->orderBy('created_at', 'desc')->get();
+        return view('admin.orders', compact('orders'));
+    }
+
+    public function deleteOrder($id) {
+        $order = \App\Models\Order::findOrFail($id);
+        $order->delete();
+        return back()->with('success', 'Order record removed.');
+    }
+
     public function deleteMember($id) {
         $member = PetClubSubscription::findOrFail($id);
         $member->delete();
