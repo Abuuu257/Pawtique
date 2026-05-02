@@ -25,7 +25,7 @@ Route::get('/checkout/cancel', [StripeController::class, 'cancel'])->name('strip
 
 Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store')->middleware('auth');
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['admin'])->group(function () {
     Route::get('/admin', [PageController::class, 'adminDashboard'])->name('admin.dashboard');
     Route::get('/admin/products', [PageController::class, 'adminProducts'])->name('admin.products');
     Route::get('/admin/products/create', [PageController::class, 'createProduct'])->name('admin.products.create');
